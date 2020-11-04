@@ -1,0 +1,2 @@
+# StaticServer
+Just static server
