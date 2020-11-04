@@ -1,0 +1,15 @@
+configurations:
+  port: 8080
+  root: '/etc/webroot'
+  dotfiles: 'ignore'
+
+  errors:
+    e404: '/errors/404.html'
+
+  headers:
+    X-Powered-By: 'StaticServer/2'
+    Access-Control-Allow-Origin: '*'
+    Content-Security-Policy: 'default-src https:;'
+    X-Frame-Options: 'SAMEORIGIN'
+    Referrer-Policy: 'unsafe-url'
+    Permissions-Policy: 'microphone=(self), camera=(self)'
