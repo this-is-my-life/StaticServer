@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contents of <%= path %></title>
+    <style>
+      * { font-family: sans-serif; }
+
+      table {  
+        color: #333;
+        border-collapse: collapse;
+        border-spacing: 0;
+        min-width: 500px;
+      }
+
+      td, th { border: 1px solid #CCC; height: 30px; padding: 0px 5px; text-align: center; }
+
+      th {  
+        background: #F3F3F3;
+        font-weight: bold;
+      }
+
+      td { background: #FAFAFA }
+    </style>
+  </head>
+  <body>
+    <% const files = data.filter((d) => !d.stats.isDirectory()) %>
+    <% const directories = data.filter((d) => d.stats.isDirectory()) %>
+
+    <h3>Contents of <%= path %></h3>
+    <h5>Total: <%= files.length %> files, <%= directories.length %> directories</h5>
+
+    <table>
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>size</th>
+          <th>actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="99"><a href=".">. (current)</a></td>
+        </tr>
+        <tr>
+          <td colspan="99"><a href="..">.. (parent)</a></td>
+        </tr>
+        <% for (const dir of directories) { %>
+          <tr>
+            <td><a href="<%= dir.name %>"><%= dir.name %>/</a></td>
+            <td>-</td>
+            <% if (dir.name !== '.git') { %>
+              <td>-</td>
+            <% } else { %>
+              <td><a href="<%= dir.name %>?pull=✔">pull</a></td>
+            <% } %>
+          </tr>
+        <% } %>
+        <% for (const file of files) { %>
+          <tr>
+            <td><a href="<%= file.name %>"><%= file.name %></a></td>
+            <td><%= file.stats.size %>byte</td>
+            <td>
+              <a href="<%= file.name %>?raw=✔">raw</a>
+              <a href="<%= file.name %>?dl=✔">dl</a>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </body>
+</html>
