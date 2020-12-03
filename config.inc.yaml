@@ -9,7 +9,7 @@ configurations:
   headers:
     X-Powered-By: 'StaticServer/2'
     Access-Control-Allow-Origin: '*'
-    Content-Security-Policy: 'default-src https:;'
+    Content-Security-Policy: 'default-src: *'
     X-Frame-Options: 'SAMEORIGIN'
-    Referrer-Policy: 'unsafe-url'
+    Referrer-Policy: 'strict-origin'
     Permissions-Policy: 'microphone=(self), camera=(self)'

@@ -45,11 +45,23 @@ app.use(async (req, res, next) => {
 
   if (!existsSync(target)) return next()
   if (statSync(target).isDirectory()) {
+    const { redirect } = req.query
     const data = readdirSync(target, 'utf-8').reduce((prev, curr) => [...prev, { name: curr, stats: statSync(target + curr) }], [])
-    const str = await render(path + '/page/list.ejs', { path: req.path, data })
 
-    res.setHeader('Content-Type', 'text/html; charset=UTF-8')
-    return res.send(str)
+    switch (redirect) {
+      case 'firstOrder':
+        return res.redirect(req.path + data[0].name)
+
+      case 'lastOrder':
+        return res.redirect(req.path + data[data.length - 1].name)
+
+      default: {
+        const str = await render(path + '/page/list.ejs', { path: req.path, data })
+
+        res.setHeader('Content-Type', 'text/html; charset=UTF-8')
+        return res.send(str)
+      }
+    }
   }
   next()
 })
