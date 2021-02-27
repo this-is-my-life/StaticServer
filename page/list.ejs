@@ -23,13 +23,19 @@
 
       td { background: #FAFAFA }
     </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   </head>
   <body>
     <% const files = data.filter((d) => !d.stats.isDirectory()) %>
     <% const directories = data.filter((d) => d.stats.isDirectory()) %>
 
-    <h3>Contents of <%= path %></h3>
-    <h5>Total: <%= files.length %> files, <%= directories.length %> directories</h5>
+    <% if (readme) { %>
+     <%- readme %>
+    <% } else { %>
+      <h3>Contents of <%= path %></h3>
+      <h5>Total: <%= files.length %> files, <%= directories.length %> directories</h5>
+    <% } %>
+
 
     <table>
       <thead>
@@ -49,9 +55,9 @@
         <% for (const dir of directories) { %>
           <tr>
             <td><a href="<%= dir.name %>"><%= dir.name %>/</a></td>
-            <td>-</td>
+            <td>dir</td>
             <% if (dir.name !== '.git') { %>
-              <td>-</td>
+              <td><%- config.features.zipDirectory ? `<a href="${dir.name}?dl=✔">dl</a>` : '-' %></td>
             <% } else { %>
               <td><a href="<%= dir.name %>?pull=✔">pull</a></td>
             <% } %>
@@ -60,7 +66,7 @@
         <% for (const file of files) { %>
           <tr>
             <td><a href="<%= file.name %>"><%= file.name %></a></td>
-            <td><%= file.stats.size %>byte</td>
+            <td><%= byteParser(file.stats.size) %></td>
             <td>
               <a href="<%= file.name %>?raw=✔">raw</a>
               <a href="<%= file.name %>?dl=✔">dl</a>
@@ -69,5 +75,12 @@
         <% } %>
       </tbody>
     </table>
+    <ins class="adsbygoogle"
+      style="display:inline-block;width:728px;height:90px"
+      data-ad-client="ca-pub-5402646688760293"
+      data-ad-slot="8783568883"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
   </body>
 </html>
