@@ -6,7 +6,8 @@
   "author": "pmh-only <pmhstudio.pmh@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon -e ts --exec \"tsc && node dist/index.js || exit 1\""
+    "dev": "nodemon -e ts --exec \"tsc && node dist/index.js || exit 1\"",
+    "start": "tsc && node dist/index.js"
   },
   "dependencies": {
     "archiver": "^5.2.0",
