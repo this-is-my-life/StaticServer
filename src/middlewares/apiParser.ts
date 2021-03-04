@@ -77,7 +77,7 @@ export default function apiParser (config: Config) {
         }
 
         case 'lastOrder': {
-          res.redirect(contents[0])
+          res.redirect(contents[contents.length - 1])
           break
         }
 
